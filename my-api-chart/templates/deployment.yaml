@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-api
+  labels:
+    app: quarkus-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: quarkus-api
+  template:
+    metadata:
+      labels:
+        app: quarkus-api
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        name: quarkus-api
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: log-volume
+          mountPath: /logs
+      volumes:
+      - name: log-volume
+        hostPath:
+          path: /var/log/myapp

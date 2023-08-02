@@ -1,0 +1,15 @@
+replicaCount: 3
+image:
+  repository: victorafonso512/first-project-jvm
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: LoadBalancer
+  port: 8080
+ingress:
+  enabled: false
+  rewriteTarget: /
+serviceAccount:
+  create: false
+autoscaling:
+  enabled: false
